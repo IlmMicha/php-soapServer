@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project activeEnvironment="Default" name="74minuten.de" resourceRoot="" soapui-version="4.5.2" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="SOAP11Binding" type="wsdl" bindingName="{http://74minuten.de/Bestellung}SOAP11Binding" soapVersion="1_1" anonymous="optional" definition="http://74minuten.de/WS-Test/webservice.php?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://74minuten.de/WS-Test/webservice.php?wsdl"><con:part><con:url>http://74minuten.de/WS-Test/webservice.php?wsdl</con:url><con:content><![CDATA[<!--<wsdl:definitions name="SI_Bestellung_IA" 
+                  targetNamespace="http://74minuten.de/Bestellung" 
+                  xmlns:min="http://74minuten.de/Bestellung" 
+                  xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" 
+                  xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" 
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">-->
+<wsdl:definitions name="Bestellung" targetNamespace="http://74minuten.de/Bestellung" xmlns:min="http://74minuten.de/Bestellung" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://74minuten.de/Bestellung" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://74minuten.de/Bestellung">
+      <xsd:element name="Bestellung" type="DT_Bestellung"/>
+      <xsd:complexType name="DT_Adresse">
+        <xsd:sequence>
+          <xsd:element name="Name" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Strasse" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="PLZ" minOccurs="0">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:pattern value="[0-9]{5}"/>
+                <xsd:length value="5"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+          <xsd:element name="Ort" type="xsd:string" minOccurs="0"/>
+          <xsd:element name="Telefonnummer" minOccurs="0">
+            <xsd:simpleType>
+              <xsd:restriction base="xsd:string">
+                <xsd:pattern value="0[0-9]+/[0-9]+"/>
+              </xsd:restriction>
+            </xsd:simpleType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="DT_Bestellung">
+        <xsd:sequence>
+          <xsd:element name="Kopf">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="Bestellnummer" type="xsd:string"/>
+                <xsd:element name="Bestelldatum" type="xsd:string"/>
+                <xsd:element name="Auftraggeber" type="DT_Adresse"/>
+                <xsd:element name="Warenempfaenger" type="DT_Adresse"/>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="Positionen">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="Position">
+                  <xsd:complexType>
+                    <xsd:sequence>
+                      <xsd:element name="ID" type="xsd:string"/>
+                      <xsd:element name="Artikelnummer" type="xsd:string"/>
+                      <xsd:element name="Artikelbeschreibung" type="xsd:string"/>
+                      <xsd:element name="Menge" type="xsd:integer"/>
+                      <xsd:element name="Einheit" type="xsd:string"/>
+                      <xsd:element name="Preis" type="xsd:decimal"/>
+                      <xsd:element name="Waehrung">
+                        <xsd:simpleType>
+                          <xsd:restriction base="xsd:string">
+                            <xsd:enumeration value="Euro"/>
+                            <xsd:enumeration value="Dollar"/>
+                            <xsd:enumeration value="Pfund"/>
+                          </xsd:restriction>
+                        </xsd:simpleType>
+                      </xsd:element>
+                    </xsd:sequence>
+                  </xsd:complexType>
+                </xsd:element>
+              </xsd:sequence>
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="Bestellung">
+    <wsdl:part name="Bestellung" element="min:Bestellung"/>
+  </wsdl:message>
+  <wsdl:message name="BestellungResponse">
+    <wsdl:part name="Response" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </wsdl:message>
+  <wsdl:portType name="Bestellung">
+    <wsdl:operation name="anlegen">
+      <wsdl:input message="min:Bestellung"/>
+      <wsdl:output message="min:BestellungResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SOAP11Binding" type="min:Bestellung">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    <wsdl:operation name="anlegen">
+      <soap:operation soapAction="anlegen" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      <wsdl:input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="BestellungService">
+    <wsdl:port name="HTTP_Port" binding="min:SOAP11Binding">
+      <soap:address location="http://74minuten.de/WS-Test/webservice.php" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://74minuten.de/WS-Test/webservice.php</con:endpoint></con:endpoints><con:operation isOneWay="false" action="anlegen" name="anlegen" bindingOperationName="anlegen" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call name="SchönesBild"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://74minuten.de/WS-Test/webservice.php</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:bes="http://74minuten.de/Bestellung">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <bes:Bestellung>
+         <Kopf>
+            <Bestellnummer>MSc-123</Bestellnummer>
+            <Bestelldatum>22.11.2014</Bestelldatum>
+            <Auftraggeber>
+               <Name>Test GmbH</Name>
+
+               <Telefonnummer>03677/203040</Telefonnummer>
+            </Auftraggeber>
+            <Warenempfaenger>
+               <Name>Test GmbH</Name>
+               <Strasse>Humboldtstraße 3</Strasse>
+               <PLZ>98693</PLZ>
+               <Ort>Ilmenau</Ort>
+            </Warenempfaenger>
+         </Kopf>
+         <Positionen>
+            <Position>
+               <ID>1</ID>
+               <Artikelnummer>4711</Artikelnummer>
+               <Artikelbeschreibung>Schönes Bild</Artikelbeschreibung>
+               <Menge>1</Menge>
+               <Einheit>ST</Einheit>
+               <Preis>10,00</Preis>
+               <Waehrung>Euro</Waehrung>
+            </Position>
+         </Positionen>
+      </bes:Bestellung>
+   </soapenv:Body>
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>Global HTTP Settings</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="anlegen"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:properties/><con:wssContainer/><con:sensitiveInformation/></con:soapui-project>
