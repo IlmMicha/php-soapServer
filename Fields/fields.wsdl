@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="Bestellung" targetNamespace="http://74minuten.de/Bestellung" xmlns:min="http://74minuten.de/Bestellung" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+
+
+
+  <wsdl:types>
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns="http://74minuten.de/Bestellung" targetNamespace="http://74minuten.de/Bestellung">
+      <xsd:element name="Fields" type="DT_Fields"/>
+      <xsd:complexType name="DT_Fields">
+        <xsd:sequence>
+          <xsd:element name="Text" type="xsd:string"/>
+          <xsd:element name="Datum" type="xsd:date"/>
+          <xsd:element name="Uhrzeit" type="xsd:time"/>
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+
+
+
+  <wsdl:message name="Fields">
+    <wsdl:part name="Fields" element="min:Fields"/>
+  </wsdl:message>
+
+
+
+  <wsdl:portType name="Fields">
+    <wsdl:operation name="anlegen">
+      <wsdl:input message="min:Fields"/>
+    </wsdl:operation>
+  </wsdl:portType>
+
+
+
+  <wsdl:binding name="SOAP11Binding" type="min:Fields">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    <wsdl:operation name="anlegen">
+      <soap:operation soapAction="anlegen" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      <wsdl:input>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+
+
+
+  <wsdl:service name="FieldsService">
+    <wsdl:port name="HTTP_Port" binding="min:SOAP11Binding">
+      <soap:address location="http://74minuten.de/PROBAS-WS/fields.php" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
